@@ -1,0 +1,132 @@
+# =================================================================
+# SmartBudget - Git Ignore Configuration
+# =================================================================
+
+# -----------------------------------------------------------------
+# 1. Environment Secrets & Credentials (CRITICAL)
+# -----------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+*.pem
+*.key
+*.crt
+*.pfx
+*.p12
+*.keystore
+*secret*
+*token*.json
+serviceAccountKey.json
+*firebase-adminsdk*.json
+
+# -----------------------------------------------------------------
+# 2. Operating System & IDE Files
+# -----------------------------------------------------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# -----------------------------------------------------------------
+# 3. Node.js & Frontend Artifacts
+# -----------------------------------------------------------------
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+build/
+**/build/
+.vite/
+**/.vite/
+coverage/
+**/coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -----------------------------------------------------------------
+# 4. Java & Maven Build Artifacts
+# -----------------------------------------------------------------
+target/
+**/target/
+*.class
+**/*.class
+*.jar
+*.war
+*.ear
+*.nar
+.flattened-pom.xml
+
+# -----------------------------------------------------------------
+# 5. Database & Local Storage Files
+# -----------------------------------------------------------------
+postgres_data/
+**/postgres_data/
+backend/data/
+*.mv.db
+*.trace.db
+*.db
+*.sqlite3
+
+# -----------------------------------------------------------------
+# 6. Python & Analytics Artifacts
+# -----------------------------------------------------------------
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+**/.pytest_cache/
+.venv/
+venv/
+ENV/
+env/
+**/.venv/
+**/venv/
+*.egg-info/
+**/*.egg-info/
+dist/
+build/
+eggs/
+parts/
+bin/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# -----------------------------------------------------------------
+# 7. Firebase & Deployment Cache
+# -----------------------------------------------------------------
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+
+# -----------------------------------------------------------------
+# 8. General Logs
+# -----------------------------------------------------------------
+*.log
+logs/
+**/logs/

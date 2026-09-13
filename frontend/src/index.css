@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#07090e] text-slate-100 antialiased font-sans selection:bg-brand-500/30 selection:text-brand-200 min-h-screen;
+    background-image: 
+      radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 10%, rgba(6, 182, 212, 0.06) 0%, transparent 35%),
+      radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.04) 0%, transparent 45%);
+  }
+}
+
+/* High-Performance Glassmorphism & GPU Compositor Tokens */
+.glass-card {
+  background: rgba(13, 18, 32, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  transform: translateZ(0);
+}
+
+.glass-card-elevated {
+  background: rgba(18, 25, 44, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+  transform: translateZ(0);
+}
+
+.glass-card-interactive {
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  transform: translateZ(0);
+}
+
+.glass-card-interactive:hover {
+  background: rgba(22, 30, 52, 0.92);
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 0 15px -3px rgba(99, 102, 241, 0.15);
+}
+
+.glass-input {
+  background: rgba(10, 14, 25, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.glass-input:focus {
+  background: rgba(14, 20, 35, 0.95);
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  outline: none;
+}
+
+/* Custom sleek scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Recharts Custom Tooltip Styling */
+.recharts-default-tooltip {
+  background: rgba(10, 14, 26, 0.95) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.7) !important;
+  padding: 10px 14px !important;
+}
+
+.recharts-tooltip-label {
+  color: #94a3b8 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  margin-bottom: 4px !important;
+}
+
+.recharts-tooltip-item {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 2px 0 !important;
+}
+
+/* GPU Accelerated Tactile Financial Card Styling */
+.card-metal {
+  background: linear-gradient(135deg, #1e2538 0%, #111624 50%, #1e263d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.7);
+  transform: translateZ(0);
+}
+
+.card-emerald-holo {
+  background: linear-gradient(135deg, #064e3b 0%, #022c22 60%, #0f766e 100%);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  box-shadow: 0 15px 30px -10px rgba(6, 78, 59, 0.5);
+  transform: translateZ(0);
+}
+
+.card-obsidian-gold {
+  background: linear-gradient(135deg, #1c1917 0%, #0c0a09 60%, #292524 100%);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.8);
+  transform: translateZ(0);
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+

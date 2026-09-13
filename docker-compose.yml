@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  # =================================================================
+  # 1. PostgreSQL Database Service
+  # =================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: smartbudget-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-smartbudget_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_secure_password_2026}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init-db.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-smartbudget_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - smartbudget-network
+
+  # =================================================================
+  # 2. Python FastAPI Analytics & ML Microservice
+  # =================================================================
+  analytics:
+    build:
+      context: ./analytics
+      dockerfile: Dockerfile
+    container_name: smartbudget-analytics
+    restart: unless-stopped
+    environment:
+      PORT: 8001
+      ENVIRONMENT: production
+    ports:
+      - "${ANALYTICS_PORT:-8001}:8001"
+    healthcheck:
+      test: ["CMD-SHELL", "python -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:8001/health\")'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - smartbudget-network
+
+  # =================================================================
+  # 3. Java 21 Spring Boot Backend Service
+  # =================================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smartbudget-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      analytics:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-smartbudget_db}
+      DATABASE_USERNAME: ${POSTGRES_USER:-postgres}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-postgres_secure_password_2026}
+      JWT_SECRET: ${JWT_SECRET:-404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      ANALYTICS_SERVICE_URL: http://analytics:8001
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:5173}
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep UP || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+      start_period: 30s
+    networks:
+      - smartbudget-network
+
+  # =================================================================
+  # 4. React 19 Frontend Service (Vite + Nginx)
+  # =================================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: smartbudget-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${VITE_PORT:-3000}:80"
+    networks:
+      - smartbudget-network
+
+networks:
+  smartbudget-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
